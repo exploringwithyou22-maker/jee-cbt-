@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JEE CBT Mock Test – Class 11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple: #534AB7; --purple-dark: #3C3489; --purple-light: #EEEDFE;
+  --green: #3B6D11; --green-light: #EAF3DE;
+  --red: #A32D2D; --red-light: #FCEBEB;
+  --amber: #BA7517; --amber-light: #FAEEDA;
+  --blue: #185FA5; --blue-light: #E6F1FB;
+  --teal: #0F6E56; --teal-light: #E1F5EE;
+  --bg: #F5F4FC; --surface: #fff; --border: #e0ddf5;
+  --text: #1a1830; --muted: #6b6890; --faint: #f0effe;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+.screen { display: none; }
+.screen.active { display: block; }
+.container { max-width: 960px; margin: 0 auto; padding: 20px 16px; }
+
+/* NAV */
+nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; align-items: center; gap: 16px; height: 56px; position: sticky; top: 0; z-index: 100; }
+.nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; color: var(--purple); text-decoration: none; }
+.nav-logo .icon { width: 32px; height: 32px; background: var(--purple); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; }
+.nav-links { display: flex; gap: 4px; margin-left: auto; }
+.nav-btn { padding: 6px 14px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: 500; background: transparent; color: var(--muted); transition: all 0.15s; }
+.nav-btn:hover { background: var(--faint); color: var(--purple); }
+.nav-btn.active { background: var(--purple-light); color: var(--purple); }
+
+/* BUTTONS */
+.btn { cursor: pointer; border: 1px solid var(--border); background: var(--surface); color: var(--text); padding: 9px 18px; border-radius: 10px; font-size: 14px; font-weight: 500; transition: all 0.15s; font-family: inherit; display: inline-flex; align-items: center; gap: 6px; }
+.btn:hover { background: var(--faint); border-color: var(--purple); }
+.btn-primary { background: var(--purple); color: #fff; border-color: var(--purple); }
+.btn-primary:hover { background: var(--purple-dark); }
+.btn-danger { background: var(--red); color: #fff; border-color: var(--red); }
+.btn-danger:hover { background: #791F1F; }
+.btn-sm { padding: 5px 12px; font-size: 12px; border-radius: 7px; }
+.btn-wide { width: 100%; justify-content: center; padding: 12px 18px; font-size: 15px; }
+
+/* CARDS */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+.card-title { font-size: 15px; font-weight: 600; margin-bottom: 14px; }
+
+/* TAGS */
+.tag { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.02em; }
+.tag-purple { background: var(--purple-light); color: var(--purple-dark); }
+.tag-blue { background: var(--blue-light); color: var(--blue); }
+.tag-green { background: var(--green-light); color: var(--green); }
+.tag-amber { background: var(--amber-light); color: var(--amber); }
+.tag-red { background: var(--red-light); color: var(--red); }
+.tag-teal { background: var(--teal-light); color: var(--teal); }
+
+/* FORM */
+.form-group { margin-bottom: 14px; }
+.form-label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px; }
+select, input[type=number], input[type=text] { border: 1px solid var(--border); background: var(--bg); color: var(--text); padding: 9px 12px; border-radius: 9px; font-size: 14px; width: 100%; font-family: inherit; transition: border-color 0.15s; }
+select:focus, input:focus { outline: none; border-color: var(--purple); }
+
+/* GRIDS */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+@media(max-width:640px) { .grid2,.grid3,.grid4 { grid-template-columns: 1fr 1fr; } }
+
+/* LOADING */
+.loading { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 14px; padding: 20px 0; }
+.spinner { width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--purple); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* STAT CARDS */
+.stat-card { background: var(--faint); border-radius: 12px; padding: 16px; text-align: center; }
+.stat-num { font-size: 28px; font-weight: 600; }
+.stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* PROGRESS BAR */
+.pbar { height: 8px; border-radius: 4px; background: var(--bg); overflow: hidden; margin-top: 6px; border: 1px solid var(--border); }
+.pbar-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
+
+/* DIVIDER */
+.divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+/* API KEY PROMPT */
+#apikey-overlay { position: fixed; inset: 0; background: rgba(26,24,48,0.6); display: flex; align-items: center; justify-content: center; z-index: 9999; }
+#apikey-box { background: var(--surface); border-radius: 16px; padding: 28px; max-width: 420px; width: 90%; }
+#apikey-box h2 { font-size: 18px; margin-bottom: 8px; }
+#apikey-box p { font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.6; }
+#apikey-box input { margin-bottom: 10px; }
+#apikey-link { color: var(--purple); font-size: 12px; display: block; margin-bottom: 16px; }
+
+/* ===== HOME ===== */
+.hero { text-align: center; padding: 40px 20px 32px; }
+.hero h1 { font-size: 32px; font-weight: 600; color: var(--purple-dark); margin-bottom: 8px; }
+.hero p { color: var(--muted); font-size: 15px; }
+
+/* ===== CBT ===== */
+#cbt-layout { display: grid; grid-template-columns: 1fr 210px; gap: 16px; align-items: start; }
+@media(max-width:640px) { #cbt-layout { grid-template-columns: 1fr; } }
+
+.q-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+.q-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.q-num { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.q-body { font-size: 15px; line-height: 1.8; color: var(--text); margin-bottom: 20px; font-family: 'Inter', sans-serif; }
+.q-body .formula { font-family: 'JetBrains Mono', monospace; background: var(--faint); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+
+.option { display: flex; align-items: flex-start; gap: 10px; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; margin-bottom: 8px; transition: all 0.12s; }
+.option:hover { border-color: var(--purple); background: var(--faint); }
+.option.selected { border-color: var(--purple); background: var(--purple-light); }
+.opt-key { min-width: 26px; height: 26px; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; transition: all 0.12s; }
+.option.selected .opt-key { background: var(--purple); color: #fff; border-color: var(--purple); }
+.opt-text { font-size: 14px; line-height: 1.6; padding-top: 1px; }
+
+.cbt-footer { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 14px; margin-top: 14px; border-top: 1px solid var(--border); }
+
+/* PALETTE */
+.palette-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; position: sticky; top: 76px; }
+.timer-display { background: var(--purple-dark); color: #fff; border-radius: 10px; padding: 10px 14px; text-align: center; margin-bottom: 12px; }
+.timer-digits { font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 500; letter-spacing: 0.05em; }
+.timer-lbl { font-size: 10px; opacity: 0.7; margin-top: 1px; text-transform: uppercase; letter-spacing: 0.08em; }
+.pal-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin: 8px 0 12px; }
+.pal-btn { width: 34px; height: 34px; border-radius: 8px; border: none; cursor: pointer; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; transition: transform 0.1s; }
+.pal-btn:hover { transform: scale(1.1); }
+.pal-not-visited { background: #ccc; color: #555; }
+.pal-unanswered { background: var(--red); color: #fff; }
+.pal-answered { background: var(--green); color: #fff; }
+.pal-marked { background: var(--purple); color: #fff; }
+.pal-current { outline: 2.5px solid var(--text); outline-offset: 2px; }
+
+.legend { display: flex; flex-direction: column; gap: 5px; }
+.leg-row { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
+.leg-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+
+/* ANALYSIS */
+.score-hero { text-align: center; padding: 20px; }
+.score-big { font-size: 52px; font-weight: 600; color: var(--purple); }
+.score-sub { font-size: 14px; color: var(--muted); margin-top: 4px; }
+.stat-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+.stat-row:last-child { border-bottom: none; }
+.stat-lbl { color: var(--muted); }
+
+/* REVIEW */
+.review-option { padding: 7px 10px; border-radius: 8px; font-size: 13px; margin-bottom: 4px; }
+.review-correct { background: var(--green-light); color: #1a3a0a; }
+.review-wrong { background: var(--red-light); color: #5a1010; }
+.review-neutral { color: var(--text); }
+
+/* HEATMAP */
+.heatmap { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.heat-cell { height: 22px; border-radius: 4px; }
+
+/* CHAPTER CHIPS */
+.chapter-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chapter-chip { padding: 5px 12px; border-radius: 20px; border: 1.5px solid var(--border); cursor: pointer; font-size: 12px; font-weight: 500; transition: all 0.12s; }
+.chapter-chip:hover { border-color: var(--purple); color: var(--purple); background: var(--faint); }
+.chapter-chip.selected { background: var(--purple); color: #fff; border-color: var(--purple); }
+</style>
+</head>
+<body>
+
+<!-- API KEY OVERLAY -->
+<div id="apikey-overlay">
+  <div id="apikey-box">
+    <h2>Enter Anthropic API Key</h2>
+    <p>Your key is stored only in your browser (localStorage) and never sent anywhere except directly to Anthropic's API to generate questions.</p>
+    <input type="text" id="api-key-input" placeholder="sk-ant-api03-..." autocomplete="off">
+    <a href="https://console.anthropic.com/keys" target="_blank" id="apikey-link">→ Get your API key from console.anthropic.com</a>
+    <button class="btn btn-primary btn-wide" onclick="saveApiKey()">Save &amp; Continue</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" onclick="showScreen('home')" style="cursor:pointer">
+    <div class="icon">⚛</div>
+    JEE CBT
+  </a>
+  <div class="nav-links">
+    <button class="nav-btn active" id="nav-home" onclick="showScreen('home')">Home</button>
+    <button class="nav-btn" id="nav-setup" onclick="showScreen('setup')">New Test</button>
+    <button class="nav-btn" id="nav-dash" onclick="showScreen('dashboard')">Dashboard</button>
+    <button class="nav-btn" id="nav-key" onclick="resetApiKey()" title="Change API key">🔑</button>
+  </div>
+</nav>
+
+<!-- =================== HOME =================== -->
+<div id="screen-home" class="screen active">
+  <div class="container">
+    <div class="hero">
+      <h1>JEE CBT Mock Test</h1>
+      <p>Class 11 · Physics, Chemistry, Mathematics · AI-powered question generation</p>
+    </div>
+    <div class="grid3" style="margin-bottom:20px">
+      <div class="stat-card">
+        <div class="stat-num" id="s-tests" style="color:var(--purple)">0</div>
+        <div class="stat-label">Tests Taken</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="s-accuracy" style="color:var(--green)">—</div>
+        <div class="stat-label">Best Accuracy</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="s-chapters" style="color:var(--amber)">0</div>
+        <div class="stat-label">Chapters Covered</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;margin-bottom:20px">
+      <button class="btn btn-primary btn-wide" onclick="showScreen('setup')">＋ New Test</button>
+      <button class="btn btn-wide" onclick="showScreen('dashboard')">📊 Dashboard</button>
+    </div>
+    <div class="card">
+      <div class="card-title">Recent Tests</div>
+      <div id="recent-list"><div style="color:var(--muted);font-size:14px;padding:16px 0;text-align:center">No tests yet — start your first test!</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== SETUP =================== -->
+<div id="screen-setup" class="screen">
+  <div class="container">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+      <button class="btn btn-sm" onclick="showScreen('home')">← Back</button>
+      <h2 style="font-size:18px;font-weight:600">Configure Test</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-title">Subject &amp; Chapter</div>
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <select id="sel-sub" onchange="updateChapters()">
+              <option value="physics">Physics</option>
+              <option value="chemistry">Chemistry</option>
+              <option value="mathematics">Mathematics</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Chapter (Class 11 only)</label>
+            <select id="sel-chap"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Exercise Type</label>
+            <select id="sel-ex">
+              <option value="1">Exercise 1 – Concept building</option>
+              <option value="2">Exercise 2 – Mixed practice (JEE Main level)</option>
+              <option value="3">Exercise 3 – JEE Main PYQ-style</option>
+              <option value="4">Exercise 4 – JEE Advanced PYQ-style</option>
+              <option value="5">Adaptive – Weak + Strong mix</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-title">Test Settings</div>
+          <div class="grid2">
+            <div class="form-group">
+              <label class="form-label">Questions</label>
+              <input type="number" id="inp-q" value="20" min="5" max="60">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Time (min)</label>
+              <input type="number" id="inp-t" value="30" min="5" max="180">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Difficulty</label>
+            <select id="sel-diff">
+              <option value="mixed">Mixed</option>
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pattern</label>
+            <select id="sel-pat">
+              <option value="main">JEE Main (+4/−1)</option>
+              <option value="advanced">JEE Advanced (+4/−2)</option>
+              <option value="mixed">Mixed</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-wide" id="gen-btn" onclick="generateTest()">▶ Generate &amp; Start Test</button>
+    <div id="gen-loading" style="display:none" class="loading"><div class="spinner"></div>Generating questions with AI — this takes about 10–20 seconds…</div>
+    <div id="gen-error" style="display:none;margin-top:12px;padding:12px 16px;background:var(--red-light);border-radius:10px;color:var(--red);font-size:14px"></div>
+  </div>
+</div>
+
+<!-- =================== CBT =================== -->
+<div id="screen-cbt" class="screen">
+  <div class="container">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+      <div>
+        <span style="font-weight:600;font-size:16px" id="cbt-title"></span>
+        <span style="color:var(--muted);font-size:13px;margin-left:8px" id="cbt-sub"></span>
+      </div>
+      <button class="btn btn-danger btn-sm" onclick="confirmSubmit()">Submit Test</button>
+    </div>
+    <div id="cbt-layout">
+      <!-- Question -->
+      <div>
+        <div class="q-card">
+          <div class="q-meta">
+            <span class="q-num" id="qnum"></span>
+            <div style="display:flex;gap:6px" id="qtags"></div>
+          </div>
+          <div class="q-body" id="qtext"></div>
+          <div id="qopts"></div>
+          <div class="cbt-footer">
+            <button class="btn btn-sm" onclick="markReview()">🔖 Mark for Review</button>
+            <button class="btn btn-sm" onclick="clearAns()">✕ Clear</button>
+            <div style="flex:1"></div>
+            <button class="btn btn-sm" onclick="prevQ()">← Prev</button>
+            <button class="btn btn-primary btn-sm" onclick="nextQ()">Save &amp; Next →</button>
+          </div>
+        </div>
+      </div>
+      <!-- Palette -->
+      <div>
+        <div class="palette-card">
+          <div class="timer-display" id="timer-box">
+            <div class="timer-digits" id="timer-val">30:00</div>
+            <div class="timer-lbl">Time Remaining</div>
+          </div>
+          <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Question Palette</div>
+          <div class="pal-grid" id="pal-grid"></div>
+          <div class="legend">
+            <div class="leg-row"><div class="leg-dot" style="background:#ccc"></div>Not visited</div>
+            <div class="leg-row"><div class="leg-dot" style="background:var(--red)"></div>Not answered</div>
+            <div class="leg-row"><div class="leg-dot" style="background:var(--green)"></div>Answered</div>
+            <div class="leg-row"><div class="leg-dot" style="background:var(--purple)"></div>Marked for review</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =================== ANALYSIS =================== -->
+<div id="screen-analysis" class="screen">
+  <div class="container">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+      <button class="btn btn-sm" onclick="showScreen('home')">🏠 Home</button>
+      <h2 style="font-size:18px;font-weight:600">Test Analysis</h2>
+    </div>
+    <div id="analysis-body"></div>
+  </div>
+</div>
+
+<!-- =================== DASHBOARD =================== -->
+<div id="screen-dashboard" class="screen">
+  <div class="container">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+      <button class="btn btn-sm" onclick="showScreen('home')">← Back</button>
+      <h2 style="font-size:18px;font-weight:600">Dashboard</h2>
+    </div>
+    <div id="dash-body"></div>
+  </div>
+</div>
+
+<script>
+// ====== DATA ======
+const CHAPTERS = {
+  physics: ["Units & Measurements","Kinematics (1D & 2D)","Laws of Motion","Work, Energy & Power","Rotational Motion","Gravitation","Mechanical Properties of Solids","Mechanical Properties of Fluids","Thermal Properties of Matter","Thermodynamics","Kinetic Theory of Gases","Oscillations","Waves"],
+  chemistry: ["Some Basic Concepts of Chemistry","Structure of Atom","Classification of Elements & Periodicity","Chemical Bonding & Molecular Structure","States of Matter","Thermodynamics","Equilibrium","Redox Reactions","Hydrogen","The s-Block Elements","The p-Block Elements (Gr 13–14)","Organic Chemistry – Basic Principles","Hydrocarbons","Environmental Chemistry"],
+  mathematics: ["Sets","Relations & Functions","Trigonometric Functions","Mathematical Induction","Complex Numbers & Quadratic Equations","Linear Inequalities","Permutations & Combinations","Binomial Theorem","Sequences & Series","Straight Lines","Conic Sections","Introduction to 3D Geometry","Limits & Derivatives","Statistics","Probability"]
+};
+const EX_NAMES = {"1":"Concept Building","2":"Mixed Practice","3":"JEE Main PYQ-style","4":"JEE Advanced PYQ-style","5":"Adaptive Test"};
+
+let API_KEY = localStorage.getItem('jee_api_key') || '';
+let history = JSON.parse(localStorage.getItem('jee_history') || '[]');
+let st = { questions:[], answers:{}, marked:{}, visited:{}, idx:0, timeLeft:0, timer:null, cfg:{} };
+
+// ====== API KEY ======
+function saveApiKey() {
+  const k = document.getElementById('api-key-input').value.trim();
+  if(!k.startsWith('sk-')) { alert('Please enter a valid Anthropic API key starting with sk-'); return; }
+  API_KEY = k;
+  localStorage.setItem('jee_api_key', k);
+  document.getElementById('apikey-overlay').style.display = 'none';
+}
+function resetApiKey() {
+  localStorage.removeItem('jee_api_key');
+  API_KEY = '';
+  document.getElementById('apikey-overlay').style.display = 'flex';
+}
+if(API_KEY) document.getElementById('apikey-overlay').style.display = 'none';
+
+// ====== SCREENS ======
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const nb = document.getElementById('nav-'+id);
+  if(nb) nb.classList.add('active');
+  if(id==='home') renderHome();
+  if(id==='dashboard') renderDashboard();
+}
+
+// ====== CHAPTERS ======
+function updateChapters() {
+  const sub = document.getElementById('sel-sub').value;
+  const s = document.getElementById('sel-chap');
+  s.innerHTML = CHAPTERS[sub].map(c => `<option>${c}</option>`).join('');
+}
+updateChapters();
+
+// ====== HOME ======
+function renderHome() {
+  document.getElementById('s-tests').textContent = history.length;
+  const accs = history.map(t=>t.accuracy).filter(Boolean);
+  document.getElementById('s-accuracy').textContent = accs.length ? Math.round(Math.max(...accs))+'%' : '—';
+  document.getElementById('s-chapters').textContent = new Set(history.map(t=>t.chapter)).size;
+  const el = document.getElementById('recent-list');
+  if(!history.length) { el.innerHTML = '<div style="color:var(--muted);font-size:14px;padding:16px 0;text-align:center">No tests yet — start your first test!</div>'; return; }
+  el.innerHTML = history.slice().reverse().slice(0,8).map(t => {
+    const col = t.accuracy>=70?'var(--green)':t.accuracy>=40?'var(--amber)':'var(--red)';
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div>
+        <div style="font-size:14px;font-weight:500">${t.chapter}</div>
+        <div style="font-size:12px;color:var(--muted)">${t.subject} · ${EX_NAMES[t.ex]||'Test'} · ${t.date}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-weight:600;color:${col}">${Math.round(t.accuracy)}%</div>
+        <div style="font-size:11px;color:var(--muted)">${t.score}/${t.max} marks</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ====== GENERATE TEST ======
+async function generateTest() {
+  if(!API_KEY) { document.getElementById('apikey-overlay').style.display='flex'; return; }
+  const sub = document.getElementById('sel-sub').value;
+  const chap = document.getElementById('sel-chap').value;
+  const ex = document.getElementById('sel-ex').value;
+  const qn = Math.min(60, Math.max(5, parseInt(document.getElementById('inp-q').value)||20));
+  const tm = Math.min(180, Math.max(5, parseInt(document.getElementById('inp-t').value)||30));
+  const diff = document.getElementById('sel-diff').value;
+  const pat = document.getElementById('sel-pat').value;
+  st.cfg = {sub, chap, ex, qn, tm, diff, pat};
+
+  const errEl = document.getElementById('gen-error');
+  errEl.style.display = 'none';
+  document.getElementById('gen-btn').style.display = 'none';
+  document.getElementById('gen-loading').style.display = 'flex';
+
+  const exDesc = {"1":"concept-building questions testing fundamental understanding, definitions, and formulas","2":"mixed practice questions at JEE Main level combining multiple sub-topics","3":"questions closely inspired by JEE Main previous year papers in style and difficulty","4":"multi-step JEE Advanced style questions requiring deep analytical reasoning","5":"adaptive mix covering weak fundamentals and advanced applications"}[ex];
+  const markNote = pat==='main'?'+4/−1 marking, single correct MCQ':pat==='advanced'?'+4/−2 marking, can include multi-correct':'mix of single correct and multi-correct';
+
+  const prompt = `You are an expert JEE question setter. Generate exactly ${qn} ${exDesc} for Class 11 ${sub.charAt(0).toUpperCase()+sub.slice(1)}, chapter: "${chap}".
+Difficulty: ${diff==='mixed'?'a realistic mix of easy (30%), medium (50%), hard (20%)':diff}.
+Pattern: ${markNote}. All questions must be from Class 11 syllabus only.
+Each question must have exactly 4 options (A, B, C, D) with one correct answer.
+Cover diverse sub-topics within the chapter.
+
+Return ONLY a JSON object, no markdown fences, no extra text:
+{"questions":[{"id":1,"text":"question text","options":["A. option1","B. option2","C. option3","D. option4"],"correct":"A","topic":"sub-topic name","difficulty":"easy|medium|hard","solution":"2-3 sentence explanation of the correct answer","type":"single_correct"}]}`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': API_KEY, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 4096, messages: [{ role: 'user', content: prompt }] })
+    });
+    if(!res.ok) { throw new Error(`API error ${res.status}: ${await res.text()}`); }
+    const data = await res.json();
+    const raw = data.content.map(c=>c.text||'').join('');
+    const clean = raw.replace(/```json\n?|```\n?/g,'').trim();
+    let parsed;
+    try { parsed = JSON.parse(clean); } catch(e) {
+      const m = clean.match(/\{[\s\S]*\}/);
+      if(m) parsed = JSON.parse(m[0]); else throw new Error('Could not parse JSON response');
+    }
+    st.questions = (parsed.questions || parsed).slice(0, qn);
+    if(!st.questions.length) throw new Error('No questions returned');
+    st.answers = {}; st.marked = {}; st.visited = {0:true}; st.idx = 0;
+    st.timeLeft = tm * 60;
+    launchCBT();
+  } catch(e) {
+    document.getElementById('gen-loading').style.display = 'none';
+    document.getElementById('gen-btn').style.display = 'block';
+    errEl.textContent = 'Error: ' + (e.message || 'Failed to generate questions. Check your API key and try again.');
+    errEl.style.display = 'block';
+  }
+}
+
+// ====== CBT ======
+function launchCBT() {
+  document.getElementById('gen-loading').style.display = 'none';
+  document.getElementById('gen-btn').style.display = 'block';
+  const {sub, chap, ex} = st.cfg;
+  document.getElementById('cbt-title').textContent = `${sub.charAt(0).toUpperCase()+sub.slice(1)} – ${chap}`;
+  document.getElementById('cbt-sub').textContent = EX_NAMES[ex];
+  showScreen('cbt');
+  renderQ(); renderPal(); startTimer();
+}
+
+function renderQ() {
+  const q = st.questions[st.idx];
+  if(!q) return;
+  st.visited[st.idx] = true;
+  document.getElementById('qnum').textContent = `Question ${st.idx+1} of ${st.questions.length}`;
+  document.getElementById('qtext').textContent = q.text;
+  const dc = q.difficulty==='easy'?'tag-green':q.difficulty==='hard'?'tag-red':'tag-amber';
+  document.getElementById('qtags').innerHTML = `<span class="tag tag-blue">${q.topic||''}</span><span class="tag ${dc}">${q.difficulty||'medium'}</span>${st.marked[st.idx]?'<span class="tag tag-purple">Marked</span>':''}`;
+  document.getElementById('qopts').innerHTML = (q.options||[]).map((opt,i) => {
+    const L = ['A','B','C','D'][i];
+    const sel = st.answers[st.idx]===L ? 'selected' : '';
+    return `<div class="option ${sel}" onclick="pickOpt('${L}')"><div class="opt-key">${L}</div><div class="opt-text">${opt.replace(/^[A-D]\.\s*/,'')}</div></div>`;
+  }).join('');
+  renderPal();
+}
+
+function pickOpt(L) { st.answers[st.idx] = L; renderQ(); }
+function clearAns() { delete st.answers[st.idx]; renderQ(); }
+function markReview() { if(st.marked[st.idx]) delete st.marked[st.idx]; else st.marked[st.idx]=true; renderQ(); }
+function prevQ() { if(st.idx>0){ st.idx--; st.visited[st.idx]=true; renderQ(); } }
+function nextQ() { if(st.idx<st.questions.length-1){ st.idx++; st.visited[st.idx]=true; renderQ(); } }
+function gotoQ(i) { st.idx=i; st.visited[i]=true; renderQ(); }
+
+function renderPal() {
+  document.getElementById('pal-grid').innerHTML = st.questions.map((_,i) => {
+    let cls = 'pal-not-visited';
+    if(st.visited[i]) cls = st.answers[i] ? 'pal-answered' : 'pal-unanswered';
+    if(st.marked[i]) cls = 'pal-marked';
+    if(i===st.idx) cls += ' pal-current';
+    return `<button class="pal-btn ${cls}" onclick="gotoQ(${i})" title="Q${i+1}">${i+1}</button>`;
+  }).join('');
+}
+
+function startTimer() {
+  if(st.timer) clearInterval(st.timer);
+  st.timer = setInterval(() => {
+    st.timeLeft--;
+    if(st.timeLeft<=0) { clearInterval(st.timer); submitTest(); return; }
+    const m = String(Math.floor(st.timeLeft/60)).padStart(2,'0');
+    const s = String(st.timeLeft%60).padStart(2,'0');
+    document.getElementById('timer-val').textContent = `${m}:${s}`;
+    const box = document.getElementById('timer-box');
+    if(box) box.style.background = st.timeLeft<120 ? 'var(--red)' : 'var(--purple-dark)';
+  }, 1000);
+}
+
+function confirmSubmit() {
+  const ans = Object.keys(st.answers).length;
+  if(confirm(`Submit test?\nAnswered: ${ans}/${st.questions.length}\nUnattempted: ${st.questions.length-ans}`)) submitTest();
+}
+
+// ====== SUBMIT & ANALYSIS ======
+function submitTest() {
+  clearInterval(st.timer);
+  const {sub, chap, ex, tm, pat} = st.cfg;
+  let correct=0, wrong=0, skip=0;
+  const topicMap = {};
+  const errTypes = {concept:0, silly:0, time:0};
+
+  st.questions.forEach((q,i) => {
+    const t = q.topic || chap;
+    if(!topicMap[t]) topicMap[t]={c:0,w:0,n:0};
+    topicMap[t].n++;
+    if(!st.answers[i]) { skip++; }
+    else if(st.answers[i]===q.correct) { correct++; topicMap[t].c++; }
+    else { wrong++; topicMap[t].w++; if(q.difficulty==='easy') errTypes.silly++; else if(st.marked[i]) errTypes.time++; else errTypes.concept++; }
+  });
+
+  const neg = pat==='advanced'?2:1;
+  const score = correct*4 - wrong*neg;
+  const maxS = st.questions.length*4;
+  const accuracy = st.questions.length ? Math.round(correct/st.questions.length*100) : 0;
+  const timeUsed = tm*60 - st.timeLeft;
+  const percentile = Math.min(99.9, Math.round(25 + accuracy*0.68 + (correct>8?6:0)));
+
+  const res = {sub, chap, ex, score, maxS, accuracy, correct, wrong, skip, topicMap, errTypes, timeUsed, percentile, pat};
+
+  history.push({subject:sub, chapter:chap, ex, score, max:maxS, accuracy, date:new Date().toLocaleDateString()});
+  try { localStorage.setItem('jee_history', JSON.stringify(history.slice(-30))); } catch(e){}
+
+  showScreen('analysis');
+  renderAnalysis(res);
+}
+
+function renderAnalysis(r) {
+  const col = r.accuracy>=70?'var(--green)':r.accuracy>=40?'var(--amber)':'var(--red)';
+  const recovery = r.accuracy<40?'Relearn mode: revisit NCERT basics and solved examples before attempting more questions.':
+    r.accuracy<70?'Practice mode: focus on the weak sub-topics listed above with targeted practice.':
+    'Advanced mode: attempt JEE Advanced level questions and past papers for this chapter.';
+
+  const topicRows = Object.entries(r.topicMap).map(([t,s]) => {
+    const acc = s.n?Math.round(s.c/s.n*100):0;
+    const status = acc>=70?['Mastered','tag-green']:acc>=40?['Improving','tag-amber']:['Weak','tag-red'];
+    const barCol = acc>=70?'var(--green)':acc>=40?'var(--amber)':'var(--red)';
+    return `<div style="padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span style="font-size:13px;font-weight:500">${t}</span>
+        <span class="tag ${status[1]}">${status[0]}</span>
+      </div>
+      <div class="pbar"><div class="pbar-fill" style="width:${acc}%;background:${barCol}"></div></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:3px">${s.c}/${s.n} correct · ${acc}%</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('analysis-body').innerHTML = `
+    <div class="card" style="margin-bottom:14px">
+      <div class="score-hero">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:4px">${r.sub.charAt(0).toUpperCase()+r.sub.slice(1)} · ${r.chap} · ${EX_NAMES[r.ex]||''}</div>
+        <div class="score-big" style="color:${col}">${r.score}<span style="font-size:20px;color:var(--muted)">/${r.maxS}</span></div>
+        <div style="display:flex;justify-content:center;gap:8px;margin-top:10px;flex-wrap:wrap">
+          <span class="tag tag-purple">~${r.percentile}th percentile</span>
+          <span class="tag tag-blue">Accuracy: ${r.accuracy}%</span>
+          <span class="tag tag-teal">Time: ${Math.floor(r.timeUsed/60)}m ${r.timeUsed%60}s</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid2" style="margin-bottom:14px">
+      <div class="card">
+        <div class="card-title">Score Breakdown</div>
+        <div class="stat-row"><span class="stat-lbl">Correct</span><span style="color:var(--green);font-weight:600">+${r.correct*4} (${r.correct}×4)</span></div>
+        <div class="stat-row"><span class="stat-lbl">Wrong</span><span style="color:var(--red);font-weight:600">−${r.wrong*(r.pat==='advanced'?2:1)} (neg. marking)</span></div>
+        <div class="stat-row"><span class="stat-lbl">Unattempted</span><span>${r.skip}</span></div>
+        <div class="stat-row"><span class="stat-lbl">Net Score</span><span style="font-weight:600">${r.score}/${r.maxS}</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Error Analysis</div>
+        <div class="stat-row"><span class="stat-lbl">Concept error</span><span>${r.errTypes.concept}</span></div>
+        <div class="stat-row"><span class="stat-lbl">Silly mistake</span><span>${r.errTypes.silly}</span></div>
+        <div class="stat-row"><span class="stat-lbl">Time pressure</span><span>${r.errTypes.time}</span></div>
+        <div class="stat-row"><span class="stat-lbl">Unattempted</span><span>${r.skip}</span></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-title">Topic Analysis</div>
+      ${topicRows || '<div style="color:var(--muted)">No data</div>'}
+    </div>
+
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-title">Recovery Plan</div>
+      <div style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:12px">${recovery}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="reviewAnswers()">📋 Review Answers &amp; Solutions</button>
+        <button class="btn" onclick="showScreen('setup')">＋ Take Another Test</button>
+      </div>
+    </div>`;
+}
+
+function reviewAnswers() {
+  let html = `<button class="btn btn-sm" style="margin-bottom:16px" onclick="renderAnalysis(window._lastResult)">← Back to Analysis</button>`;
+  st.questions.forEach((q,i) => {
+    const ua = st.answers[i]||null;
+    const ok = ua===q.correct;
+    const skip = !ua;
+    const borderCol = skip?'var(--border)':ok?'var(--green)':'var(--red)';
+    html += `<div class="card" style="margin-bottom:12px;border-left:3px solid ${borderCol}">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em">Q${i+1} · ${q.topic||''} · ${q.difficulty||'medium'}</div>
+      <div style="font-size:14px;line-height:1.7;margin-bottom:12px">${q.text}</div>
+      ${(q.options||[]).map((opt,oi)=>{
+        const L=['A','B','C','D'][oi];
+        const isCorrect=L===q.correct, isUser=L===ua&&!ok;
+        const cls=isCorrect?'review-correct':isUser?'review-wrong':'review-neutral';
+        return `<div class="review-option ${cls}">${opt}${isCorrect?' ✓':isUser?' ✗':''}</div>`;
+      }).join('')}
+      <div style="margin-top:10px;font-size:13px;color:var(--muted);background:var(--bg);padding:10px 12px;border-radius:9px;line-height:1.6">
+        <strong style="color:var(--text)">Solution:</strong> ${q.solution||'Refer to NCERT.'}
+      </div>
+    </div>`;
+  });
+  document.getElementById('analysis-body').innerHTML = html;
+}
+
+// ====== DASHBOARD ======
+function renderDashboard() {
+  if(!history.length) {
+    document.getElementById('dash-body').innerHTML = '<div class="card" style="text-align:center;padding:40px;color:var(--muted)">Complete a test to see your dashboard.</div>';
+    return;
+  }
+  const byChapter = {};
+  history.forEach(t => {
+    if(!byChapter[t.chapter]) byChapter[t.chapter]=[];
+    byChapter[t.chapter].push(t.accuracy);
+  });
+  const heatCells = Array.from({length:28},(_,i)=>{
+    const t = history[history.length-1-i];
+    if(!t) return `<div class="heat-cell" style="background:var(--border)"></div>`;
+    const c = t.accuracy>=70?'var(--green)':t.accuracy>=40?'var(--amber)':'var(--red)';
+    return `<div class="heat-cell" style="background:${c}" title="${t.date}: ${Math.round(t.accuracy)}%"></div>`;
+  }).join('');
+  const chapRows = Object.entries(byChapter).map(([ch,accs])=>{
+    const avg=Math.round(accs.reduce((a,b)=>a+b,0)/accs.length);
+    const c=avg>=70?'var(--green)':avg>=40?'var(--amber)':'var(--red)';
+    return `<div class="stat-row"><div><div style="font-size:13px;font-weight:500">${ch}</div><div style="font-size:11px;color:var(--muted)">${accs.length} test${accs.length>1?'s':''}</div></div>
+      <div><div style="font-weight:600;color:${c}">${avg}%</div><div class="pbar" style="width:80px"><div class="pbar-fill" style="width:${avg}%;background:${c}"></div></div></div></div>`;
+  }).join('');
+  document.getElementById('dash-body').innerHTML = `
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-title">Activity Heatmap (last 28 tests)</div>
+      <div class="heatmap">${heatCells}</div>
+      <div style="display:flex;gap:12px;margin-top:8px;font-size:11px;color:var(--muted)">
+        <span><span style="display:inline-block;width:10px;height:10px;background:var(--green);border-radius:2px;margin-right:4px"></span>≥70%</span>
+        <span><span style="display:inline-block;width:10px;height:10px;background:var(--amber);border-radius:2px;margin-right:4px"></span>40–69%</span>
+        <span><span style="display:inline-block;width:10px;height:10px;background:var(--red);border-radius:2px;margin-right:4px"></span>&lt;40%</span>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-title">Chapter Performance</div>
+      ${chapRows}
+    </div>
+    <div class="card">
+      <div class="card-title">Test History</div>
+      ${history.slice().reverse().map(t=>{
+        const c=t.accuracy>=70?'var(--green)':t.accuracy>=40?'var(--amber)':'var(--red)';
+        return `<div class="stat-row"><div><div style="font-size:13px;font-weight:500">${t.chapter}</div><div style="font-size:11px;color:var(--muted)">${t.subject||''} · ${EX_NAMES[t.ex]||'Test'} · ${t.date}</div></div>
+          <div style="text-align:right"><div style="font-weight:600;color:${c}">${Math.round(t.accuracy)}%</div><div style="font-size:11px;color:var(--muted)">${t.score}/${t.max}</div></div></div>`;
+      }).join('')}
+    </div>`;
+}
+
+renderHome();
+</script>
+</body>
+</html>
